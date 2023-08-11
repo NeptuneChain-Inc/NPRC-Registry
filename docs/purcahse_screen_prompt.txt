@@ -1,0 +1,19 @@
+We created a blockchain network where users can by credits from different producers and verifiers. There is a list of available producers which will supply credits from a specific verifier. The users will use stripe as a payment gateway and apon successful purchase, a transaction is made onto the blockchain to purchase the credits and mint the certificate.
+Using reactjs, You will use the supplied contract ABI and ethersjs to communicate with the blockchain to query and make transactions.
+You will use styled components to create a user-friendly interface with an interactive user-experience using beautiful animations and transitions.  
+lets create a purchase screen with the following properties:
+1. query the contract to retrieve the list of producers (getProducers()) and it's suppliers (getProducerVerifiers(string producer)) along with the issued supply (getIssuedSupply(string producer, string verifier)) of each.
+2. use that information to create a 3 column table (producer | verifier | supply) table which is sorted from the highest supply to the list. This allows users to pick which producer/verifier to buy from. This option is optional so the table should be a popup when the user clicks a select supplier button.
+3. the page should automatically display the top producer with the highest supply. It should be a card with a title, description, available supply and some other relevent values buyers would be interested in.
+4. Include a name and quatity input that should be validated that it is within available range
+5. When a user has correctly completed the form, they can click the checkout button which will redirect to the stripe checkout.
+6. Once the purchase has been successful, the buyCredits function should be executed. 
+7. Once the transaction has been confirmed on the blockchain, you should redirect to the home screen
+
+Below is the ContractABI
+const contractABI = [
+  "function getProducers() view returns (string[] _producers)",
+  "function getProducerVerifiers(string producer) view returns (string[] _producerVerifiers)",
+  "function getIssuedSupply(string producer, string verifier) view returns (int256 _issuedSupply)",
+"function buyCredits(string _accountID, string _producer, string _verifier, int256 amount) returns (bool _creditsBought)",
+];

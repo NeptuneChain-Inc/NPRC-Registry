@@ -1,0 +1,82 @@
+Just some things to verify:
+
+Nutrient Pollution Removal Certificates (NPRCs) from producers are issued/minted by NeptubeChain after being verified by verifiers.
+Regarding the purchasing of NPRCs, when a user wants to buy, there is a predetermined total supply depending on the amount issued by producers, therefore they can be sold out (limited supply).
+A NPRC can only be sold once. For more sales to take place, more NPRCs have to be made available from producers. 
+When a user purchases NPRCs, they receive a certificate confirming their ownership of a specific quantity of NPRCs
+Users can only buy the supply available directly from the producers, therefore there is no reselling to other users since their ownership is fixed into the certificate.
+
+Questions:
+
+Once an NPRC is sold, can it be refunded (Given back to suppliers to be resold) or destroyed? This would invlove 'burning' the NPRC from the blockchain and either make it available for resell or take it out of existance. 
+
+
+Map Questions:
+
+Are the Utility Providers (Navy Blue) and Farmers (Neptune Blue) regarded as the NPRCs Producers/Sellers?
+3. Verifiers (three tiers)
+- (Gold)
+- (Silver)
+- (White)
+4. Community (Grey)
+
+Enquiry:{
+
+Just some things to verify:
+
+Nutrient Pollution Removal Certificates (NPRCs) from producers are issued/minted by NeptuneChain after being verified by verifiers.
+Regarding the purchasing of NPRCs, when a user wants to buy, there is a predetermined total supply depending on the amount issued by producers, therefore they can be sold out (limited supply).
+A NPRC can only be sold once. For more sales to take place, more NPRCs have to be made available from producers.
+When a user purchases NPRCs, they receive a certificate confirming their ownership of a specific quantity of NPRCs
+Users can only buy the supply available directly from the producers, therefore there is no reselling to other users since their ownership is fixed into the certificate.
+
+Questions:
+
+Once an NPRC is sold, can it be refunded (Given back to suppliers to be resold) or destroyed? This would involve 'burning' the NPRC from the blockchain and either make it available for resell or take it out of existence. Or are sales and ownership final and permanent
+}
+Response: {
+once sold credits can be retired upon purchase but without retirement they will stay “idle” in a state where someone can own the contract. once retired, the credit is essentially burned, where it has no owner (but the deed is still executed), donated to neptunechain, or donated to another eligible organization in our network.
+
+that way you can 1) own a credit and see the entire lifecycle + rights to the verification partner 2) gift the credit to an organization or person, or 3) donate to the farmer contingent upon nutrient removal
+
+ideally people would burn the credit and let the farmer choose their own verification company
+
+but if not, the owner will have that choice or the farmers choice is elected upon default
+
+Does that answer your question?
+
+these sales would not take place on NeptuneChain, only by p2p
+}
+
+Ok so functions of the smart contract:
+
+1: Issue Credits (New credits are issued by NeptuneChain after being verified. Verification done off-chain and only NeptuneChain has access to this function)
+2: Buy Credits (Creates a Certificate of Ownership. Executed after successfull purchase of credits. Function only accessible from payment gateway.)
+3: Transfer Credits (Voids current certificate of ownership and creates new one. All past owners will be recorded in records. Authorised by owner of credits. Since users wont be dealing with the blockchain directly, NeptuneChain can initiate the transfer on behalf of owner through email verification)
+4: Burn Credits (Removes Credits from existance and reduces total supply. All burned credits will be recorded in records. Again since users wont deal with the blockchain directly, NeptuneChain can initiate the transfer on behalf of owner through email verification)
+
+Can you please verify?
+
+Now in terms of the map. Where would i retrieve the location data for the different entities so i can pin them on the map.
+
+1. Utility Providers (Navy Blue)
+2. Farmers (Neptune Blue)
+3. Verifiers (three tiers)
+- (Gold)
+- (Silver)
+- (White)
+4. Community (Grey)
+
+I think this is the only information I am left with to implement the full website as per the contract.
+
+Create a secure and robust solidity smart contract with the following:
+1: Issue Credits (New credits are issued by contract owner)
+2: Buy Credits (Creates a Certificate of Ownership as a struct mapped to a unique hashed email with the following data: {
+    "id": int256,
+    "buyer": "String",
+    "producer": "String",
+    "balance": int256,
+    "modified": "timestamp"
+}. only Executed after successfull purchase from off-chain stripe payment gateway.)
+3: Transfer Credits (adjusts the balance of current owner certificate and transfers to receiver balance in receivers mapped certificate struct. only executed by contract owner
+4: Burn Credits (Removes Credits from existance and reduces total supply. All burned credits will be recorded in records under burned tokens. only executed by contract owner)
