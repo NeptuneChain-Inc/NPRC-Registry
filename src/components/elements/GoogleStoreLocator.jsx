@@ -92,6 +92,35 @@ span {
 const MapContainer = styled.div`
   flex: 2;
 `;
+
+const InfoWindowContent = styled.div`
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 200px;
+  overflow: hidden;
+  color: ${colorScheme.accent};
+
+  h4 {
+    margin: 0;
+    padding: 5px 0;
+    font-size: 1rem;
+    color: ${colorScheme.accent};
+  }
+
+  p {
+    color: black;
+    margin: 5px 0;
+    font-size: 0.8rem;
+  }
+
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
 function GoogleStoreLocator({ storesData }) {
   const [selectedStore, setSelectedStore] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -132,9 +161,7 @@ function GoogleStoreLocator({ storesData }) {
     zipCode: store["Zip Code"],
   }));
 
-  const center = stores.length
-    ? stores[0].location
-    : { lat: 40.785091, lng: -73.968285 };
+  const center = { lat: 37.926868, lng: -78.024902 };
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
@@ -222,7 +249,7 @@ function GoogleStoreLocator({ storesData }) {
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={14}
+            zoom={7}
             options={mapOptions}
           >
             {stores.map((store, index) => (
@@ -237,11 +264,14 @@ function GoogleStoreLocator({ storesData }) {
                 position={selectedStore.location}
                 onCloseClick={() => setSelectedStore(null)}
               >
-                <div>
-                  <h4 style={{ color: colorScheme.accent }}>
-                    Store name: {selectedStore.name}
+                <InfoWindowContent>
+                  <h4>
+                    {selectedStore.name}
                   </h4>
-                </div>
+                  {selectedStore.address && <p>{selectedStore.address}, {selectedStore.city}, {selectedStore.states} {selectedStore.zipCode}</p>}
+                  {selectedStore.website && <p><a href={selectedStore.website} target="_blank" rel="noreferrer">Visit Website</a></p>}
+                  {selectedStore.email && <p><a href={`mailto:${selectedStore.email}`}>Email</a></p>}
+                </InfoWindowContent>
               </InfoWindow>
             )}
           </GoogleMap>

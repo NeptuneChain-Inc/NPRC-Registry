@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import mapboxgl from 'mapbox-gl';
-import { MapBoxKey } from '../../contracts/ref';
 import styled from 'styled-components';
+import { GoogleMaps_API_KEY } from '../../contracts/ref';
 
 const MapContainer = styled.div`
 width: 100%;
@@ -13,35 +12,42 @@ width: 100%;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 
-  .mapboxgl-map {
-    width: 100%;
-    height: 100%;
+  /* Hide the links at the bottom of the map */
+  .gm-style > div:nth-child(1) > a {
+    display: none !important;
+  }
+
+  /* Hide the Google logo */
+  .gm-style .gm-style-cc {
+    display: none !important;
   }
 `;
-
-mapboxgl.accessToken = MapBoxKey;
 
 function MapBox() {
   const mapContainerRef = useRef(null);
 
   useEffect(() => {
-    const map = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/satellite-v9', // Use satellite view
-      center: [-76.47764, 38.197963],
-      zoom: 13
-    });
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GoogleMaps_API_KEY}`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
 
-    // Disable map controls
-    map.scrollZoom.disable(); // Disable zooming with scroll
-    map.boxZoom.disable(); // Disable box zoom
-    map.dragRotate.disable(); // Disable map rotation
-    map.dragPan.disable(); // Disable map panning
-    map.keyboard.disable(); // Disable keyboard shortcuts
-    map.doubleClickZoom.disable(); // Disable zooming with double click
-    map.touchZoomRotate.disable(); // Disable zooming and rotating with touch
+    script.onload = () => {
+      const map = new google.maps.Map(mapContainerRef.current, {
+        center: { lat: 38.197963, lng: -76.47764 },
+        zoom: 13,
+        disableDefaultUI: true,
+        gestureHandling: 'none',
+        mapTypeId: 'satellite',
+      });
+    };
 
-    return () => map.remove();
+    return () => {
+      if (window.google && window.google.maps) {
+        window.google.maps.event.clearInstanceListeners(map);
+      }
+    };
   }, []);
 
   return <MapContainer ref={mapContainerRef} />;
