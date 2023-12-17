@@ -12,7 +12,9 @@ The NPRC-Registry repository is an integral part of the NeptuneChain ecosystem. 
 
 ## Changelog
 
-Currently, there are no changelog entries for the NPRC-Registry repository. This section will be updated with details of new features, bug fixes, and other significant changes as they occur.
+### Latest Update (November 16)
+**Transfer of Ownership and Formalized Organization**
+- Repository transfered from AMako
 
 ## Planned Updates
 
